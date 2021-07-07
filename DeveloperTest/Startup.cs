@@ -42,7 +42,7 @@ namespace DeveloperTest
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger Document for API", Description = "Displays REST endpoints for interacting with the API", Version = "v1" });
                 var fileName = "ApiDocumentation.xml";
                 var filePath = Path.Combine(AppContext.BaseDirectory, fileName);
-                //c.IncludeXmlComments(filePath, true);
+                c.IncludeXmlComments(filePath, true);
             });
         }
 

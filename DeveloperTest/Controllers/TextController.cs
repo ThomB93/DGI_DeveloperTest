@@ -24,14 +24,14 @@ namespace DeveloperTest.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<ActionResult<DistinctTextResponseResource>> CountDistinctWords(DistinctTextRequestResource input)
+        public async Task<ActionResult<DistinctTextResponseResource>> GetDistinctWordCountAndWatchlistWords(DistinctTextRequestResource request)
         {
             try
             {
-                var textToCreate = _mapper.Map<DistinctTextRequestResource, DistinctText>(input);
+                var textToCreate = _mapper.Map<DistinctTextRequestResource, DistinctText>(request);
 
-                textToCreate.DistinctWordCount = _textService.GetNumberOfDistinctWords(input.Text);
-                textToCreate.Text = string.Join(" ", _textService.GetDistinctWords(input.Text));
+                textToCreate.DistinctWordCount = _textService.GetNumberOfDistinctWords(request.Text);
+                textToCreate.Text = string.Join(" ", _textService.GetDistinctWords(request.Text));
                 var createdText = await _textService.CreateDistinctText(textToCreate);
 
                 //use the text we save to the DB as input to method to avoid looping through duplicate words
@@ -41,7 +41,7 @@ namespace DeveloperTest.Controllers
             }
             catch (Exception e)
             {
-                throw e;
+                return BadRequest();
             }
             
         }

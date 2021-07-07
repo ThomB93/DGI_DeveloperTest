@@ -14,8 +14,14 @@ namespace DeveloperTest.Services
         {
             _unitOfWork = unitOfWork;
         }
+        private string RemoveNonAlphanumericalCharacters(string input)
+        {
+            return new Regex("[^a-zA-Z0-9]").Replace(input, " ");
+        }
         public IEnumerable<string> GetDistinctWords(string text)
         {
+            text = RemoveNonAlphanumericalCharacters(text);
+
             //a set only contains unique unordered values
             HashSet<String> uniqueWords =
             new HashSet<String>(text.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries));
@@ -24,8 +30,7 @@ namespace DeveloperTest.Services
 
         public int GetNumberOfDistinctWords(string text)
         {
-            //Replace non-alphanumerical characters with a space
-            text = new Regex("[^a-zA-Z0-9]").Replace(text, " ");
+            text = RemoveNonAlphanumericalCharacters(text);
 
             //doesn't count empty strings
             var words = text.ToLower().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
